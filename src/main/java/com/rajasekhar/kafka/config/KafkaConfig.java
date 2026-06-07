@@ -13,7 +13,7 @@ import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.DefaultErrorHandler;
-import org.springframework.kafka.admin.KafkaAdmin;
+import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.util.backoff.FixedBackOff;
@@ -58,30 +58,12 @@ public class KafkaConfig {
     @Bean
     public KafkaAdmin.NewTopics kafkaTopics() {
         return new KafkaAdmin.NewTopics(
-            TopicBuilder.name(KafkaTopics.ORDERS_CREATED)
-                .partitions(3)        // 3 partitions = 3 parallel consumers max
-                .replicas(1)          // 1 replica for local dev (use 3 in prod)
-                .build(),
-            TopicBuilder.name(KafkaTopics.ORDERS_CREATED_DLQ)
-                .partitions(1)
-                .replicas(1)
-                .build(),
-            TopicBuilder.name(KafkaTopics.FRAUD_ALERTS)
-                .partitions(3)
-                .replicas(1)
-                .build(),
-            TopicBuilder.name(KafkaTopics.FRAUD_ALERTS_DLQ)
-                .partitions(1)
-                .replicas(1)
-                .build(),
-            TopicBuilder.name(KafkaTopics.WALLET_TRANSACTIONS)
-                .partitions(3)
-                .replicas(1)
-                .build(),
-            TopicBuilder.name(KafkaTopics.WALLET_TRANSACTIONS_DLQ)
-                .partitions(1)
-                .replicas(1)
-                .build()
+                TopicBuilder.name(KafkaTopics.ORDERS_CREATED).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaTopics.ORDERS_CREATED_DLQ).partitions(1).replicas(1).build(),
+                TopicBuilder.name(KafkaTopics.FRAUD_ALERTS).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaTopics.FRAUD_ALERTS_DLQ).partitions(1).replicas(1).build(),
+                TopicBuilder.name(KafkaTopics.WALLET_TRANSACTIONS).partitions(3).replicas(1).build(),
+                TopicBuilder.name(KafkaTopics.WALLET_TRANSACTIONS_DLQ).partitions(1).replicas(1).build()
         );
     }
 
